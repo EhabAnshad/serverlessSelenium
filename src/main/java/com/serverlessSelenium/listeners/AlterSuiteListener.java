@@ -14,6 +14,7 @@ import com.serverlessSelenium.helpers.StorageHelper;
 import com.serverlessSelenium.lambda.client.TestInvoker;
 import com.serverlessSelenium.lambda.model.ExecutionRequest;
 import com.serverlessSelenium.util.KeysGenerators;
+import com.serverlessSelenium.util.ResultsHandler;
 
 public class AlterSuiteListener implements IAlterSuiteListener {
 	
@@ -22,16 +23,17 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     public void alter(List<XmlSuite> suites) {
 		//Get random text to use as identifier for upload/download
     	String rootFolder = KeysGenerators.getRadomText();
-    	
+    	ResultsHandler results = new ResultsHandler();
     	uploadClasses(rootFolder);
     	
     	 for(XmlSuite suite:suites) {
     	    List<XmlClass> list =suite.getTests().get(0).getClasses();
     	    list.parallelStream().forEach(x -> {
 	    	    TestInvoker invoker = new TestInvoker(new ExecutionRequest(x.getName(), rootFolder));
-	    	    System.out.println(invoker.run().getTestngResult());
-	    	    //TODO: Collect results, aggregate and generate final result , Save attachment if any
+	    	    results.addResult(invoker.run());
     	    });
+    	    
+    	    results.aggregateAndReport();
     	    
     	    suite.setTests(new ArrayList<XmlTest>());
     		}
