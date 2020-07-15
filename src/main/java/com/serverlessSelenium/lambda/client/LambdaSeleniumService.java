@@ -1,10 +1,10 @@
 package com.serverlessSelenium.lambda.client;
 
 import com.amazonaws.services.lambda.invoke.LambdaFunction;
-import com.serverlessSelenium.lambda.TestRequest;
-import com.serverlessSelenium.lambda.TestResult;
+import com.serverlessSelenium.lambda.model.ExecutionRequest;
+import com.serverlessSelenium.lambda.model.TestResult;
 
 public interface LambdaSeleniumService {
     @LambdaFunction(functionName = "MyFunction")
-    TestResult runTest(TestRequest testRequest);
+    TestResult runTest(ExecutionRequest testExecutionRequest);
 }

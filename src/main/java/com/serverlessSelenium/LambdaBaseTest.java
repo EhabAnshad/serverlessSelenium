@@ -1,28 +1,40 @@
 package com.serverlessSelenium;
 
-import org.junit.Before;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 
 import com.serverlessSelenium.driver.ChromeLambdaDriver;
 import com.serverlessSelenium.driver.LambdaDriver;
 import com.serverlessSelenium.lambda.LambdaFunctionHandler;
 
-
-
 public abstract class LambdaBaseTest {
-	protected WebDriver driver;
+	public WebDriver driver;
 
-	@Before
-	public void baseTestBeforeClass() {		
+	@BeforeClass
+	public void baseTestBeforeClass() {
 		LambdaDriver chromeDriver = new ChromeLambdaDriver();
 		driver = chromeDriver.createSession();
 	}
-	
-	 protected void screenshot(String description) {
-		 LambdaFunctionHandler.addAttachment(description + ".png",
-	                    ((TakesScreenshot) driver)
-	                            .getScreenshotAs(OutputType.BYTES));
-	    }
+
+	@AfterClass
+	public void baseTestAfterClass() {
+		driver.quit();
+	}
+
+	@AfterMethod
+	public void screeshotOnFailure(ITestResult result) {
+		if (result.getStatus() == ITestResult.FAILURE) {
+			screenshot(result.getName());
+		}
+	}
+
+	protected void screenshot(String description) {
+		LambdaFunctionHandler.addScreenShot(description + ".png",
+				((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
+	}
 }

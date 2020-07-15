@@ -2,15 +2,15 @@ package com.serverlessSelenium.lambda.client;
 
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder;
 import com.amazonaws.services.lambda.invoke.LambdaInvokerFactory;
-import com.serverlessSelenium.lambda.TestRequest;
-import com.serverlessSelenium.lambda.TestResult;
+import com.serverlessSelenium.lambda.model.ExecutionRequest;
+import com.serverlessSelenium.lambda.model.TestResult;
 
 public class TestInvoker {
 
-	private final TestRequest request;
+	private final ExecutionRequest testExecutionRequest;
 
-	public TestInvoker(TestRequest request) {
-		this.request = request;
+	public TestInvoker(final ExecutionRequest testExecutionRequest) {
+		this.testExecutionRequest = testExecutionRequest;
 	}
 
 	public TestResult run() {
@@ -19,6 +19,6 @@ public class TestInvoker {
 				.lambdaClient(AWSLambdaClientBuilder.defaultClient())
 				.build(LambdaSeleniumService.class);
 
-		return lambdaService.runTest(request);
+		return lambdaService.runTest(testExecutionRequest);
 	}
 }

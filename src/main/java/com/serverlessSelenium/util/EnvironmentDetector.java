@@ -1,4 +1,4 @@
-package com.serverlessSelenium.testcontext;
+package com.serverlessSelenium.util;
 
 import static java.util.Optional.ofNullable;
 
