@@ -8,4 +8,6 @@ public interface StorageHelper {
 	
 	void downloadFolder(String path);
 	
+	void deleteFolder(String path);
+	
 }

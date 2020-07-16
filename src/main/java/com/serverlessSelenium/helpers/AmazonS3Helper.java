@@ -3,10 +3,13 @@ package com.serverlessSelenium.helpers;
 import java.io.File;
 
 import com.amazonaws.AmazonClientException;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.transfer.MultipleFileDownload;
 import com.amazonaws.services.s3.transfer.MultipleFileUpload;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
-import com.amazonaws.services.s3.transfer.MultipleFileDownload;
 
 public class AmazonS3Helper implements StorageHelper {
 	private final String bucketName;
@@ -42,6 +45,15 @@ public class AmazonS3Helper implements StorageHelper {
 	@Override
 	public void downloadFolder(String path) {
 		downloadFolder(path, "");
+	}
+
+	@Override
+	public void deleteFolder(String path) {
+		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().build();
+		for (S3ObjectSummary file : s3Client.listObjects(bucketName, path).getObjectSummaries()) {
+			s3Client.deleteObject(bucketName, file.getKey());
+		}
+
 	}
 
 }
