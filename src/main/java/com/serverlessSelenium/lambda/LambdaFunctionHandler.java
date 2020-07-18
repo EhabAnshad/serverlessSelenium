@@ -26,8 +26,8 @@ import com.serverlessSelenium.lambda.model.TestResult;
 
 public class LambdaFunctionHandler implements RequestHandler<ExecutionRequest, TestResult> {
 	private ClassLoader loader;
-	private static final String directory = "/tmp/user-data/";
-	private String bucketName = "lambda-input-selenium";
+	private final String directory = "/tmp/user-data/";
+	private final String bucketName;
 	private final StorageHelper s3Helper;
 	private final String currentAbsolutePath;
 	private String classPath;
@@ -35,8 +35,9 @@ public class LambdaFunctionHandler implements RequestHandler<ExecutionRequest, T
 	private static TestResult myResults ;
 	
 	public LambdaFunctionHandler() {
-		s3Helper = new AmazonS3Helper(bucketName);
 		currentAbsolutePath = Paths.get(Paths.get("").toAbsolutePath().toString(), directory).toString();
+		bucketName =  "lambda-input-selenium";
+		s3Helper = new AmazonS3Helper(bucketName);
 		myResults = new TestResult();
 	}
 

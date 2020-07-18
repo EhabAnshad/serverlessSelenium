@@ -14,6 +14,7 @@ import com.serverlessSelenium.helpers.ResultsHandler;
 import com.serverlessSelenium.helpers.StorageHelper;
 import com.serverlessSelenium.lambda.client.TestInvoker;
 import com.serverlessSelenium.lambda.model.ExecutionRequest;
+import com.serverlessSelenium.providers.ApplicationProperties;
 import com.serverlessSelenium.util.KeysGenerators;
 
 public class AlterSuiteListener implements IAlterSuiteListener {
@@ -23,6 +24,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     public void alter(List<XmlSuite> suites) {
 		//Get random text to use as identifier for upload/download
     	String rootFolder = KeysGenerators.getRadomText();
+
     	ResultsHandler results = new ResultsHandler();
     	uploadClasses(rootFolder);
 
@@ -46,7 +48,8 @@ public class AlterSuiteListener implements IAlterSuiteListener {
 
 	private void uploadClasses(String rootFolder) {
 		//upload tests classes to S3
-		s3Helper = new AmazonS3Helper("lambda-input-selenium");
+		String bucketName = ApplicationProperties.INSTANCE.getProperty("BucketName");
+		s3Helper = new AmazonS3Helper(bucketName);
     	
     	String currentAbsolutePath = Paths.get("").toAbsolutePath().toString();
     	String packagePath = Paths.get(currentAbsolutePath,"target","test-classes").toString();

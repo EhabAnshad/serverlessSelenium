@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.serverlessSelenium.lambda.model.TestResult;
+import com.serverlessSelenium.providers.ApplicationProperties;
 
 public class ResultsHandler {
 //TODO: need complete refectoring
@@ -56,7 +58,10 @@ public class ResultsHandler {
 	}
 
 	private void writeAttachments(Map<String, byte[]> attachments) {
-		File outputDirectory = new File(System.getProperty("user.dir") + "/build/screenshots/");
+		String outputDirectoryPath = 
+				Paths.get(Paths.get("").toAbsolutePath().toString(),
+						ApplicationProperties.INSTANCE.getProperty("OutputFolder")).toString();
+		File outputDirectory = new File(outputDirectoryPath);
 		outputDirectory.mkdirs();
 
 		attachments.forEach((fileName, bytes) -> {
@@ -71,7 +76,10 @@ public class ResultsHandler {
 	private void writeResults() {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(true);
-
+		String outputFile = 
+				Paths.get(Paths.get("").toAbsolutePath().toString(),
+						ApplicationProperties.INSTANCE.getProperty("OutputFolder"),
+						java.time.LocalDateTime.now().toString().replace(":", "-") + ".xml").toString();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
@@ -150,7 +158,7 @@ public class ResultsHandler {
 
 			}
 			else{
-				BufferedWriter writer = new BufferedWriter(new FileWriter("file.xml"));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
 			    writer.write(results.get(0).getTestngResult());
 			    writer.close();
 			}

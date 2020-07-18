@@ -3,12 +3,11 @@
   <listeners>
    <listener class-name="com.serverlessSelenium.listeners.AlterSuiteListener"/> 
   </listeners>
-	<parameter name="URL" value="http://127.0.0.1:3000/" />
 	<test name="chrome">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.amazonaws.lambda.tests.LambdaTest" />
-			<class name="com.amazonaws.lambda.tests.Amazon" />  
+			<!-- <class name="com.amazonaws.lambda.tests.Amazon" />   -->
 		</classes>
 	</test>
 </suite>
