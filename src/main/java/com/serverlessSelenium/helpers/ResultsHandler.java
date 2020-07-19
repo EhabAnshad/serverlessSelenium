@@ -153,7 +153,7 @@ public class ResultsHandler {
 				TransformerFactory tf = TransformerFactory.newInstance();
 				Transformer t = tf.newTransformer();
 				DOMSource source = new DOMSource(baseDoc);
-				StreamResult result = new StreamResult(System.out);// new File("file.xml"));
+				StreamResult result = new StreamResult(new File(outputFile));// System.out
 				t.transform(source, result);
 
 			}

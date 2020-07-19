@@ -10,4 +10,5 @@ public interface StorageHelper {
 	
 	void deleteFolder(String path);
 	
+	void shutdown();
 }

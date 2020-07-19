@@ -56,4 +56,9 @@ public class AmazonS3Helper implements StorageHelper {
 
 	}
 
+	@Override
+	public void shutdown() {
+		transferManager.shutdownNow();
+	}
+
 }

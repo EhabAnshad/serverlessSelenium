@@ -41,6 +41,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     	    suite.setTests(new ArrayList<XmlTest>());
     		}
     	 
+    	 s3Helper.shutdown();
     	 //clean up
     	 
 
