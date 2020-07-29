@@ -134,15 +134,19 @@ public class ResultsHandler {
 					int value = Integer.parseInt(namedNodeMap2.item(x).getChildNodes().item(0).getNodeValue());
 					switch (namedNodeMap2.item(x).getNodeName()) {
 					case "failed":
+						System.out.println("failed: "+ String.valueOf(failed + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(failed + value));
 						break;
 					case "passed":
+						System.out.println("passed: "+ String.valueOf(failed + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(passed + value));
 						break;
 					case "skipped":
+						System.out.println("skipped: "+ String.valueOf(failed + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(skipped + value));
 						break;
 					case "total":
+						System.out.println("total: "+ String.valueOf(failed + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(total + value));
 						break;
 					}
@@ -160,6 +164,7 @@ public class ResultsHandler {
 			else{
 				BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
 			    writer.write(results.get(0).getTestngResult());
+			    System.out.println(results.get(0).getTestngResult());
 			    writer.close();
 			}
 			
