@@ -23,7 +23,7 @@ public class ChromeLambdaDriver implements LambdaDriver {
 		if (EnvironmentDetector.inLambda()) {
 			driver = new ChromeDriver(getOptions());
 		} else {
-			driver = new ChromeDriver();
+			driver = new ChromeDriver(getOptions());
 			driver.manage().window().maximize();
 		}
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
