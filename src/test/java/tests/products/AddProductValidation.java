@@ -16,9 +16,8 @@ public class AddProductValidation extends TestBase {
     	//setup
     	Product testProduct = new GenerateProduct();
     	testProduct.setProductName("");
-    	HomePage homePageObject = new HomePage(driver);
     	
-    	ProductsPage productsPage =  homePageObject.openProducts();
+    	ProductsPage productsPage =  new HomePage(driver).openProducts();
     	    	
     	String result =  productsPage.addNewProduct(testProduct).getResults();
     	

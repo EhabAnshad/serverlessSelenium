@@ -50,21 +50,21 @@ public class PageBase {
 	
 	public void waitForElementToBeVisible(final By selector)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 45);
 		wait.until(
 		        ExpectedConditions.visibilityOfElementLocated(selector));
 	}
 	
 	public void waitForElementToBeInvisible(final By selector)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 45);
 		wait.until(
 		        ExpectedConditions.invisibilityOfElementLocated(selector));
 	}
 	
 	public void waitForPageToLoad()
 	{
-	   new WebDriverWait(driver, 30)
+	   new WebDriverWait(driver, 45)
 	   		.until((ExpectedCondition<Boolean>) 
 				   wd ->((JavascriptExecutor) wd)
 				   .executeScript("return document.readyState")
@@ -73,7 +73,7 @@ public class PageBase {
 
 	public void waitForJQuery() 
 	{
-		new WebDriverWait(driver, 10)
+		new WebDriverWait(driver, 45)
 				.until((ExpectedCondition<Boolean>) 
 						wd ->((JavascriptExecutor) wd)
 						.executeScript("return !!window.jQuery && window.jQuery.active == 0")
@@ -96,5 +96,7 @@ public class PageBase {
 
 	public void refreshPage() {
 		driver.navigate().refresh();
+		waitForPageToLoad();
+		waitForJQuery();
 	}
 }

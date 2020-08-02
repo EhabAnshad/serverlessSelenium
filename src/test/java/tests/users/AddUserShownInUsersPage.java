@@ -15,12 +15,8 @@ public class AddUserShownInUsersPage extends TestBase {
     public void VerifyUserExists() {
     	//setup
     	User testUser = new GenerateUser();
-    	HomePage homePageObject = new HomePage(driver);
-    	String result =  homePageObject.signUp(testUser).getResults();
-    	Assert.assertTrue(result
-    			.equalsIgnoreCase("Thanks for signing up! You'll be among the first to know when we launch."),
-    			result);
-    	
+    	HomePage homePageObject = new HomePage(driver).signUp(testUser);
+
     	UsersPage userPage =  homePageObject.openUsers();
     	userPage.refreshPage();
     	Assert.assertTrue(userPage.doesUserExists(testUser), testUser.getEmail() + " doesn't exists");
