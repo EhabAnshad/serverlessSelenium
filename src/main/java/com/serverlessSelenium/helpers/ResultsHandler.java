@@ -138,15 +138,15 @@ public class ResultsHandler {
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(failed + value));
 						break;
 					case "passed":
-						System.out.println("passed: "+ String.valueOf(failed + value));
+						System.out.println("passed: "+ String.valueOf(passed + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(passed + value));
 						break;
 					case "skipped":
-						System.out.println("skipped: "+ String.valueOf(failed + value));
+						System.out.println("skipped: "+ String.valueOf(skipped + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(skipped + value));
 						break;
 					case "total":
-						System.out.println("total: "+ String.valueOf(failed + value));
+						System.out.println("total: "+ String.valueOf(total + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(total + value));
 						break;
 					}
