@@ -46,6 +46,8 @@ public class ProductsPage extends NavigationLinks {
 	
 	public ProductsPage(WebDriver driver) {
 		super(driver);
+		waitForPageToLoad();
+		waitForJQuery();
 	}
 	
 	public ProductsPage addNewProduct(Product product) {
@@ -64,6 +66,7 @@ public class ProductsPage extends NavigationLinks {
 		productPrice.sendKeys(product.getPrice());
 		waitForJQuery();
 		addProductButton.click();
+		waitForJQuery();
 		return this;
 	}
 	
@@ -78,6 +81,7 @@ public class ProductsPage extends NavigationLinks {
 		productPrice.sendKeys(product.getPrice());
 		waitForJQuery();
 		addProductButton.click();
+		waitForJQuery();
 		return this;
 	}
 	

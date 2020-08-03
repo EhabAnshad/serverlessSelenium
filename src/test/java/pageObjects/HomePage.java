@@ -51,6 +51,7 @@ public class HomePage extends NavigationLinks {
 			tries--;
 		}
 		signup.click();
+		waitForJQuery();
 		return this;
 	}
 	

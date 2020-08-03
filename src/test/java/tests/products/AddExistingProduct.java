@@ -21,6 +21,7 @@ public class AddExistingProduct extends TestBase {
     	    	
     	String result =  productsPage
     			.addNewProduct(testProduct)
+    			.refreshProductlist()
     			.addExistingNewProduct(testProduct)
     			.getResults();
     	Assert.assertTrue(result

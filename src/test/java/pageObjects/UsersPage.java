@@ -29,6 +29,7 @@ public class UsersPage extends NavigationLinks {
 	public UsersPage(WebDriver driver) {
 		super(driver);
 		waitForPageToLoad();
+		waitForJQuery();
 	}
 	
 	public boolean doesUserExists(User user) {
