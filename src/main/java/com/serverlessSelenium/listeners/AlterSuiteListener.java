@@ -1,7 +1,14 @@
 package com.serverlessSelenium.listeners;
 
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.testng.IAlterSuiteListener;
@@ -22,6 +29,11 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     
     @Override
     public void alter(List<XmlSuite> suites) {
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    	LocalDateTime dateBefore = LocalDateTime.now();
+    	System.out.println(dtf.format(dateBefore)); 
+    	
+    	
 		//Get random text to use as identifier for upload/download
     	String rootFolder = KeysGenerators.getRadomText();
 
@@ -44,7 +56,10 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     	 s3Helper.shutdown();
     	 //clean up
     	 
-
+    	LocalDateTime dateAfter = LocalDateTime.now();
+     	System.out.println(dtf.format(dateAfter)); 
+     	Duration duration = Duration.between(dateAfter, dateBefore);
+     	System.out.println("Duration: " + Math.abs(duration.toSeconds())); 
     }
 
 	private void uploadClasses(String rootFolder) {
