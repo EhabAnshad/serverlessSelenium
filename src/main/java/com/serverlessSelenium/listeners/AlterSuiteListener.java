@@ -1,7 +1,6 @@
 package com.serverlessSelenium.listeners;
 
 import java.nio.file.Paths;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,10 +24,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     
     @Override
     public void alter(List<XmlSuite> suites) {
-    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    	LocalDateTime dateBefore = LocalDateTime.now();
-    	System.out.println(dtf.format(dateBefore)); 
-    	
+    	logTimeNow();
     	
 		//Get random text to use as identifier for upload/download
     	String rootFolder = KeysGenerators.getRadomText();
@@ -42,21 +38,30 @@ public class AlterSuiteListener implements IAlterSuiteListener {
 	    	    TestInvoker invoker = new TestInvoker(new ExecutionRequest(x.getName(), rootFolder));
 	    	    results.addResult(invoker.run());
     	    });
-    	    
-       	 	s3Helper.deleteFolder(rootFolder);
-    	    results.aggregateAndReport();
-    	    
     	    suite.setTests(new ArrayList<XmlTest>());
     		}
     	 
-    	 s3Helper.shutdown();
-    	 //clean up
+     	logTimeNow();
+ 	    
+ 	    new Thread(new Runnable() {
+ 	        public void run() {
+ 	         s3Helper.deleteFolder(rootFolder);
+ 	       	 s3Helper.shutdown();
+ 	        }
+ 	    }).start();
+ 	    
+    	 	
+ 	    results.aggregateAndReport();
     	 
-    	LocalDateTime dateAfter = LocalDateTime.now();
-     	System.out.println(dtf.format(dateAfter)); 
-     	Duration duration = Duration.between(dateAfter, dateBefore);
-     	System.out.println("Duration: " + Math.abs(duration.toSeconds())); 
+    	logTimeNow();
     }
+
+	private DateTimeFormatter logTimeNow() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    	LocalDateTime dateBefore = LocalDateTime.now();
+    	System.out.println(dtf.format(dateBefore));
+		return dtf;
+	}
 
 	private void uploadClasses(String rootFolder) {
 		//upload tests classes to S3

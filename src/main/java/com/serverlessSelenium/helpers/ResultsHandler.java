@@ -45,22 +45,30 @@ public class ResultsHandler {
 
 	public void aggregateAndReport() {
 
-		for (TestResult result : results) {
-			// save attachments
-			if (!result.getAttachments().isEmpty()) {
-				writeAttachments(result.getAttachments());
+		new Thread(new Runnable() {
+			public void run() {
+				for (TestResult result : results) {
+					// save attachments
+					if (!result.getAttachments().isEmpty()) {
+						writeAttachments(result.getAttachments());
+					}
+				}
 			}
-		}
+		}).start();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				writeResults();
+			}
+		}).start();
 
-		writeResults();
 		// Write reports
 
 	}
 
 	private void writeAttachments(Map<String, byte[]> attachments) {
-		String outputDirectoryPath = 
-				Paths.get(Paths.get("").toAbsolutePath().toString(),
-						ApplicationProperties.INSTANCE.getProperty("OutputFolder")).toString();
+		String outputDirectoryPath = Paths.get(Paths.get("").toAbsolutePath().toString(),
+				ApplicationProperties.INSTANCE.getProperty("OutputFolder")).toString();
 		File outputDirectory = new File(outputDirectoryPath);
 		outputDirectory.mkdirs();
 
@@ -76,10 +84,9 @@ public class ResultsHandler {
 	private void writeResults() {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(true);
-		String outputFile = 
-				Paths.get(Paths.get("").toAbsolutePath().toString(),
-						ApplicationProperties.INSTANCE.getProperty("OutputFolder"),
-						java.time.LocalDateTime.now().toString().replace(":", "-") + ".xml").toString();
+		String outputFile = Paths.get(Paths.get("").toAbsolutePath().toString(),
+				ApplicationProperties.INSTANCE.getProperty("OutputFolder"),
+				java.time.LocalDateTime.now().toString().replace(":", "-") + ".xml").toString();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
@@ -134,19 +141,19 @@ public class ResultsHandler {
 					int value = Integer.parseInt(namedNodeMap2.item(x).getChildNodes().item(0).getNodeValue());
 					switch (namedNodeMap2.item(x).getNodeName()) {
 					case "failed":
-						System.out.println("failed: "+ String.valueOf(failed + value));
+						System.out.println("failed: " + String.valueOf(failed + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(failed + value));
 						break;
 					case "passed":
-						System.out.println("passed: "+ String.valueOf(passed + value));
+						System.out.println("passed: " + String.valueOf(passed + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(passed + value));
 						break;
 					case "skipped":
-						System.out.println("skipped: "+ String.valueOf(skipped + value));
+						System.out.println("skipped: " + String.valueOf(skipped + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(skipped + value));
 						break;
 					case "total":
-						System.out.println("total: "+ String.valueOf(total + value));
+						System.out.println("total: " + String.valueOf(total + value));
 						namedNodeMap2.item(x).getChildNodes().item(0).setNodeValue(String.valueOf(total + value));
 						break;
 					}
@@ -160,14 +167,13 @@ public class ResultsHandler {
 				StreamResult result = new StreamResult(new File(outputFile));// System.out
 				t.transform(source, result);
 
-			}
-			else{
+			} else {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
-			    writer.write(results.get(0).getTestngResult());
-			    System.out.println(results.get(0).getTestngResult());
-			    writer.close();
+				writer.write(results.get(0).getTestngResult());
+				System.out.println(results.get(0).getTestngResult());
+				writer.close();
 			}
-			
+
 		} catch (ParserConfigurationException | SAXException | IOException | TransformerException e1) {
 			e1.printStackTrace();
 		}
