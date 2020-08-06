@@ -27,7 +27,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     @Override
     public void alter(List<XmlSuite> suites) {
     	logTimeNow();
-    	
+    	System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "100");
 		//Get random text to use as identifier for upload/download
     	String rootFolder = KeysGenerators.getRadomText();
 
@@ -38,9 +38,9 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     	    List<XmlClass> list =suite.getTests().get(0).getClasses();
     	    list.parallelStream().forEach(x -> {
 	    	    TestInvoker invoker = new TestInvoker(new ExecutionRequest(x.getName(), rootFolder));
-	        	logTimeNow("Before:" + x.getName());
+	        	logTimeNow("Before: " + x.getName());
 	        	TestResult myresult  = invoker.run();
-	    	    logTimeNow("After:" + myresult.getName());
+	    	    logTimeNow("After: " + myresult.getName());
 	    	    results.addResult(myresult);
     	    });
     	    suite.setTests(new ArrayList<XmlTest>());
