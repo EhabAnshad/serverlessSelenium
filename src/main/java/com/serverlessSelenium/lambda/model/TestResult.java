@@ -8,7 +8,8 @@ public class TestResult  {
     private String indexHtml;
     private String testngResult;
     private String junitResults;
-
+    private String name;
+    
     private Map<String, byte[]> attachments = new HashMap<>();
 
     public TestResult() {}
@@ -45,6 +46,15 @@ public class TestResult  {
 
     public void setAttachments(Map<String, byte[]> attachments) {
         this.attachments = attachments;
+    }
+
+
+	public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return name;
     }
 
 }

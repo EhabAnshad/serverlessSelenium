@@ -29,7 +29,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.serverlessSelenium.lambda.model.TestResult;
-import com.serverlessSelenium.providers.ApplicationProperties;
 
 public class ResultsHandler {
 //TODO: need complete refectoring

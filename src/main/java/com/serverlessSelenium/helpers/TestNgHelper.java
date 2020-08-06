@@ -63,6 +63,7 @@ public class TestNgHelper implements UnitTestFrameworkHelper {
 			myResults.setJunitResults( new String(Files.readAllBytes(resultsPath)));
 			myResults.setTestngResult(new String(Files.readAllBytes(Paths.get(currentAbsolutePath, "testng-results.xml"))));
 			myResults.setIndexHtml(new String(Files.readAllBytes(Paths.get(currentAbsolutePath, "index.html"))));
+			myResults.setName(className);
 
 		} catch (IOException e) {
 			e.printStackTrace();
