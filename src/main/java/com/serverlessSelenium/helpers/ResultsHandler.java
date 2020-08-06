@@ -55,11 +55,8 @@ public class ResultsHandler {
 			}
 		}).start();
 		
-		new Thread(new Runnable() {
-			public void run() {
-				writeResults();
-			}
-		}).start();
+		writeResults();
+
 
 		// Write reports
 
