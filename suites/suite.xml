@@ -3,7 +3,7 @@
   <listeners>
    <listener class-name="com.serverlessSelenium.listeners.AlterSuiteListener"/> 
   </listeners>
-	<parameter name="URL" value="http://127.0.0.1:3000/" />
+	<parameter name="URL" value="http://testenv-env.eba-gxcq2r6b.eu-west-1.elasticbeanstalk.com/" />
 	<test name="test1">
 		<parameter name="browser" value="chrome" />
 		<classes>
@@ -20,42 +20,34 @@
 			<class name="tests.products.AddProductValidation" /> 
 			 <class name="tests.products.DeleteProductTest" />
 			 <class name="tests.products.EditProductTest" /> 
-		</classes>
-	</test>
-	<test name="test2">
-		<parameter name="browser" value="chrome" />
-		<classes>
-		  	<class name="tests.users.AddExistingUser" />
-		 	<class name="tests.users.AddUserShownInUsersPage" />
-			<class name="tests.users.AddUserSuccessfully" />
-			<class name="tests.users.AddUserValidation" />
-			<class name="tests.users.DeleteUserTest" />
-			<class name="tests.users.EditUserTest" /> 
+			 
+			<class name="tests.users1.AddExistingUser" />
+		 	<class name="tests.users1.AddUserShownInUsersPage" />
+			<class name="tests.users1.AddUserSuccessfully" />
+			<class name="tests.users1.AddUserValidation" />
+			<class name="tests.users1.DeleteUserTest" />
+			<class name="tests.users1.EditUserTest" /> 
 			
-			<class name="tests.products.AddExistingProduct" />
-			<class name="tests.products.AddProductShownInProductPage" />
-			<class name="tests.products.AddProductSuccessfully" />
-			<class name="tests.products.AddProductValidation" /> 
-			 <class name="tests.products.DeleteProductTest" />
-			 <class name="tests.products.EditProductTest" /> 
-		</classes>
-	</test>
-	<test name="test3">
-		<parameter name="browser" value="chrome" />
-		<classes>
-		  	<class name="tests.users.AddExistingUser" />
-		 	<class name="tests.users.AddUserShownInUsersPage" />
-			<class name="tests.users.AddUserSuccessfully" />
-			<class name="tests.users.AddUserValidation" />
-			<class name="tests.users.DeleteUserTest" />
-			<class name="tests.users.EditUserTest" /> 
+			<class name="tests.products1.AddExistingProduct" />
+			<class name="tests.products1.AddProductShownInProductPage" />
+			<class name="tests.products1.AddProductSuccessfully" />
+			<class name="tests.products1.AddProductValidation" /> 
+			<class name="tests.products1.DeleteProductTest" />
+			<class name="tests.products1.EditProductTest" />
+			 
+			<class name="tests.users2.AddExistingUser" />
+		 	<class name="tests.users2.AddUserShownInUsersPage" />
+			<class name="tests.users2.AddUserSuccessfully" />
+			<class name="tests.users2.AddUserValidation" />
+			<class name="tests.users2.DeleteUserTest" />
+			<class name="tests.users2.EditUserTest" /> 
 			
-			<class name="tests.products.AddExistingProduct" />
-			<class name="tests.products.AddProductShownInProductPage" />
-			<class name="tests.products.AddProductSuccessfully" />
-			<class name="tests.products.AddProductValidation" /> 
-			 <class name="tests.products.DeleteProductTest" />
-			 <class name="tests.products.EditProductTest" /> 
+			<class name="tests.products2.AddExistingProduct" />
+			<class name="tests.products2.AddProductShownInProductPage" />
+			<class name="tests.products2.AddProductSuccessfully" />
+			<class name="tests.products2.AddProductValidation" /> 
+			<class name="tests.products2.DeleteProductTest" />
+			<class name="tests.products2.EditProductTest" />
 		</classes>
 	</test>
 </suite>
