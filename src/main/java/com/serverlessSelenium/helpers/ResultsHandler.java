@@ -67,10 +67,7 @@ public class ResultsHandler {
 	}
 
 	private void writeAttachments(Map<String, byte[]> attachments) {
-		String outputDirectoryPath = Paths.get(Paths.get("").toAbsolutePath().toString(),
-				ApplicationProperties.INSTANCE.getProperty("OutputFolder")).toString();
-		File outputDirectory = new File(outputDirectoryPath);
-		outputDirectory.mkdirs();
+		 File outputDirectory = setupOutputFolder();
 
 		attachments.forEach((fileName, bytes) -> {
 			try {
@@ -81,12 +78,22 @@ public class ResultsHandler {
 		});
 	}
 
+	private File setupOutputFolder() {
+		String outputDirectoryPath =
+                 Paths.get(Paths.get("").toAbsolutePath().toString(),"target","surefire-reports").toString();
+		File outputDirectory = new File(outputDirectoryPath);
+		outputDirectory.mkdirs();
+		return outputDirectory;
+	}
+
 	private void writeResults() {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setNamespaceAware(true);
-		String outputFile = Paths.get(Paths.get("").toAbsolutePath().toString(),
-				ApplicationProperties.INSTANCE.getProperty("OutputFolder"),
-				java.time.LocalDateTime.now().toString().replace(":", "-") + ".xml").toString();
+		setupOutputFolder();
+		
+		String outputFile = 
+				Paths.get(Paths.get("").toAbsolutePath().toString(), "target", "surefire-reports",
+						java.time.LocalDateTime.now().toString().replace(":", "-") + ".xml").toString();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 
